@@ -29,7 +29,7 @@ class MainViewModel(private val apiService: ApiService) : ViewModel() {
                 val response = apiService.getOffersData().await()
                 if (response.isSuccessful) {
                     _offersData.postValue(response.body()?.offers ?: emptyList())
-                    Log.d("MainViewModel", "Offers loaded: ${response.body()?.offers}")
+                    Log.d("MainViewModel", "Offers loaded : ${response.body()?.offers}")
                 } else {
                     Log.e("MainViewModel", "Failed to load offers: ${response.errorBody()}")
                 }
