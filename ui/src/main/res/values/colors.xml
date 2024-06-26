@@ -15,4 +15,5 @@
     <color name="search_back_internal">#3E3F43</color>
     <color name="dialog">#242529</color>
     <color name="popular_dur">#5E5F61</color>
+    <color name="button">#2D323A</color>
 </resources>

@@ -114,7 +114,6 @@ private lateinit var  sharedPreferences: SharedPreferences
                 it.rvOffer.adapter = offerAdapter
                 offerAdapter.submitList(offers)
                 val lastText = sharedPreferences.getString("where", "Минск").toString()
-                println(lastText)
                 ticketsFragment.whereEt.setText(lastText)
 
             }

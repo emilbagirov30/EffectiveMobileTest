@@ -124,6 +124,7 @@
 
 
             <ImageView
+                android:id="@+id/iv_route"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -156,6 +157,7 @@
 
 
             <ImageView
+                android:id="@+id/iv_anywhere"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -187,6 +189,7 @@
 
 
             <ImageView
+              android:id="@+id/iv_weekend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -219,6 +222,7 @@
 
 
             <ImageView
+                android:id="@+id/iv_hot_tickets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -261,6 +265,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_stambul"
             android:layout_width="match_parent"
             android:layout_marginVertical="10dp"
             android:layout_height="wrap_content"
@@ -319,6 +324,7 @@
                 android:alpha="0.3" />
 
             <LinearLayout
+                android:id="@+id/ll_sochi"
                 android:layout_width="match_parent"
                 android:layout_marginVertical="10dp"
                 android:layout_height="wrap_content"
@@ -378,6 +384,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_phuket"
                 android:layout_width="match_parent"
                 android:layout_marginVertical="10dp"
                 android:layout_height="wrap_content"

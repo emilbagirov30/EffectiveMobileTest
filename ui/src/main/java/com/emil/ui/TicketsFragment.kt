@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -26,7 +27,7 @@ class TicketsFragment : Fragment() {
 
     }
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,12 +36,14 @@ class TicketsFragment : Fragment() {
         rvOffer = view.findViewById(R.id.rv_list_tickets)
         whereEt = view.findViewById(R.id.et_where)
         whitherEt = view.findViewById(R.id.et_whither)
-        val bottomSheetFragment = BottomSheetDialog()
 
-       whitherEt.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
+
+        whitherEt.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                val bottomSheetFragment = BottomSheetDialog(whereEt.text.toString().trim())
                 bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
             }
+            false
         }
 
 
