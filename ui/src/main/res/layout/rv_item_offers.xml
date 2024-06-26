@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/background_app"
+    android:orientation="vertical"
+    android:paddingRight="100dp"
+    >
+
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="133dp"
+        android:layout_height="133dp">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="Die Antwoord"
+        >
+
+    </TextView>
+    <TextView
+        android:id="@+id/tv_town"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginVertical="4dp"
+        android:textColor="@color/white"
+        android:text="Будапешт"
+        >
+
+
+    </TextView>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="2dp"
+    android:padding="2dp"
+    android:orientation="horizontal">
+
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_plane">
+
+</ImageView>
+
+<TextView
+    android:id="@+id/tv_price"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="1dp"
+    android:text="от 22 264 Р"
+    android:textColor="@color/white">
+
+</TextView>
+</LinearLayout>
+
+</LinearLayout>
