@@ -34,7 +34,7 @@ class MainViewModel(private val apiService: ApiService) : ViewModel() {
                     Log.e("MainViewModel", "Failed to load offers: ${response.errorBody()}")
                 }
             } catch (e: Exception) {
-                Log.e("MainViewModel", "Error loading offers", e)
+                Log.e("MainViewModel", "Error loading offers ", e)
             }
         }
     }
