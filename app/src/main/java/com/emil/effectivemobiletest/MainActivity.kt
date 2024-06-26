@@ -3,6 +3,8 @@ package com.emil.effectivemobiletest
 import MainViewModel
 import OfferAdapter
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
@@ -25,8 +27,8 @@ import com.squareup.moshi.Moshi
 import com.emil.ui.R
 import com.emil.ui.TicketsFragment
 
-class MainActivity : AppCompatActivity() {
 
+class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var apiService: ApiService
     private var defaultColor:Int? = null
@@ -43,6 +45,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var profileText: TextView
     private lateinit var offerAdapter:OfferAdapter
     private lateinit var ticketsFragment:TicketsFragment
+    private lateinit var  editor:SharedPreferences.Editor
+private lateinit var  sharedPreferences: SharedPreferences
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,21 +98,27 @@ class MainActivity : AppCompatActivity() {
             pressed(profileButton,profileText)
             changeFragment (capFragment)
         }
-
+       sharedPreferences = getSharedPreferences("AppData", Context.MODE_PRIVATE)
+        editor = sharedPreferences.edit()
         observeViewModel()
     }
 
     private fun observeViewModel() {
-        viewModel.offersData.observe(this, { offers ->
-            val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as? TicketsFragment
+        viewModel.offersData.observe(this) { offers ->
+            val fragment =
+                supportFragmentManager.findFragmentById(R.id.fragment_container) as? TicketsFragment
             fragment?.let {
-                it.rvOffer.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+                it.rvOffer.layoutManager =
+                    LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
                 offerAdapter = OfferAdapter()
                 it.rvOffer.adapter = offerAdapter
                 offerAdapter.submitList(offers)
+                val lastText = sharedPreferences.getString("where", "").toString()
+                println(lastText)
+                ticketsFragment.whereEt.setText(lastText)
 
             }
-        })
+        }
     }
 
     private fun pressed (ib: View, tv:TextView){
@@ -133,5 +143,12 @@ class MainActivity : AppCompatActivity() {
             commit()
 
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val where = ticketsFragment.whereEt.text.trim().toString()
+        editor.putString("where", where)
+        editor.apply()
     }
 }
