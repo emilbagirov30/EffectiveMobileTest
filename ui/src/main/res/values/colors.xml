@@ -13,5 +13,6 @@
     <color name="title_text">#D9D9D9</color>
     <color name="search_back">#2F3035</color>
     <color name="search_back_internal">#3E3F43</color>
-
+    <color name="dialog">#242529</color>
+    <color name="popular_dur">#5E5F61</color>
 </resources>

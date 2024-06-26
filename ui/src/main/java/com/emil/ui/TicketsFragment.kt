@@ -1,12 +1,16 @@
 package com.emil.ui
 
 import OfferAdapter
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -22,6 +26,7 @@ class TicketsFragment : Fragment() {
 
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,8 +35,18 @@ class TicketsFragment : Fragment() {
         rvOffer = view.findViewById(R.id.rv_list_tickets)
         whereEt = view.findViewById(R.id.et_where)
         whitherEt = view.findViewById(R.id.et_whither)
+        val bottomSheetFragment = BottomSheetDialog()
+
+       whitherEt.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+            }
+        }
+
+
         return view
     }
+
 
 
 }
