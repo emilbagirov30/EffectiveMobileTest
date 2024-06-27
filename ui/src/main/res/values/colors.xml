@@ -18,4 +18,5 @@
     <color name="button">#2D323A</color>
     <color name="price_color">#2261BC</color>
     <color name="tickets_back"> #1D1E20</color>
+    <color name="button_press">#323437</color>
 </resources>

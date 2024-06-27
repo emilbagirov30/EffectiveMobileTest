@@ -39,7 +39,7 @@ class BottomSheetDialog (private var where:String) : BottomSheetDialogFragment()
     private lateinit var checkAllTickets: Button
     lateinit var whereEt:EditText
     lateinit var whitherEt:EditText
-
+    lateinit var date:TextView
     companion object{
         var isFind = false
         const val TAG = "BottomSheetDialog"
@@ -82,7 +82,7 @@ class BottomSheetDialog (private var where:String) : BottomSheetDialogFragment()
         val back = view.findViewById<ImageView>(R.id.iv_back)
         val loading = view.findViewById<ProgressBar>(R.id.pb_loading)
         val panel = view.findViewById<HorizontalScrollView>(R.id.hsv_panel)
-        val date = view.findViewById<TextView>(R.id.tv_date)
+       date = view.findViewById<TextView>(R.id.tv_date)
         val dayOfTheWeek = view.findViewById<TextView>(R.id.tv_day_of_week)
         company1 =  view.findViewById(R.id.tv_c1)
         company2 =  view.findViewById(R.id.tv_c2)
@@ -143,6 +143,9 @@ backward.setOnClickListener {
         }
         back.setOnClickListener {
             dialog!!.cancel()
+        }
+        checkAllTickets.setOnClickListener {
+            switchToAllTicketsActivity()
         }
 
        whitherEt.addTextChangedListener(object : TextWatcher {
@@ -211,7 +214,13 @@ lifecycleScope.launch(Dispatchers.IO){
         val intent = Intent(activity, CapActivity::class.java)
         startActivity(intent)
     }
-
+    private fun switchToAllTicketsActivity() {
+        val intent = Intent(activity, AllTicketsActivity::class.java)
+        intent.putExtra("where",whereEt.text.toString().trim())
+        intent.putExtra("whither",whereEt.text.toString().trim())
+        intent.putExtra("date",date.text)
+        startActivity(intent)
+    }
 
     private fun setTown (town:String){
         whitherEt.setText(town)
@@ -222,7 +231,7 @@ lifecycleScope.launch(Dispatchers.IO){
     private fun setFormattedDate(tv1: TextView, tv2: TextView) {
         val currentDate = Date()
 
-        val dateFormat1 = SimpleDateFormat("d MMM, ", Locale.getDefault())
+        val dateFormat1 = SimpleDateFormat("d MMM,", Locale.getDefault())
         val dateFormat2 = SimpleDateFormat("E", Locale.getDefault())
 
         val formattedDate1 = dateFormat1.format(currentDate)
@@ -258,15 +267,15 @@ lifecycleScope.launch(Dispatchers.IO){
     fun updateTicketOffers(ticketOffers: List<TicketOffer>) {
             company1.text = ticketOffers[0].title
             price1.text = "${ticketOffers[0].price.value} ₽"
-            time1.text = ticketOffers[0].timeRange.joinToString(" ")
+            time1.text = ticketOffers[0].timeRange.joinToString("   ")
 
             company2.text = ticketOffers[1].title
             price2.text = "${ticketOffers[1].price.value} ₽"
-            time2.text = ticketOffers[1].timeRange.joinToString(" ")
+            time2.text = ticketOffers[1].timeRange.joinToString("   ")
 
             company3.text = ticketOffers[2].title
             price3.text = "${ticketOffers[2].price.value} ₽"
-            time3.text = ticketOffers[2].timeRange.joinToString(" ")
+            time3.text = ticketOffers[2].timeRange.joinToString("   ")
 
     }
 }
