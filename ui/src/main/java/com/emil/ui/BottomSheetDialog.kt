@@ -57,6 +57,7 @@ private lateinit var whereEt:EditText
         val tips= view.findViewById<LinearLayout>(R.id.ll_tips)
         val backward= view.findViewById<LinearLayout>(R.id.ll_back)
         val dateLl= view.findViewById<LinearLayout>(R.id.ll_date)
+        val ticketsLl= view.findViewById<LinearLayout>(R.id.ll_tickets)
         val cancel = view.findViewById<ImageButton>(R.id.ib_cancel)
         val revers = view.findViewById<ImageButton>(R.id.ib_reverse)
         val plane = view.findViewById<ImageView>(R.id.iv_plane_et)
@@ -131,6 +132,8 @@ backward.setOnClickListener {
                    back.visibility = View.VISIBLE
                     tips.visibility = View.GONE
              loading.visibility = View.VISIBLE
+                    panel.visibility =View.VISIBLE
+                    ticketsLl.visibility = View.VISIBLE
                 }else{
                     revers.visibility = View.GONE
                     plane.visibility = View.VISIBLE
@@ -138,6 +141,7 @@ backward.setOnClickListener {
                     back.visibility = View.GONE
                     tips.visibility = View.VISIBLE
                     panel.visibility =View.GONE
+                    ticketsLl.visibility = View.GONE
                     isFind = false
                 }
 
@@ -148,8 +152,7 @@ lifecycleScope.launch(Dispatchers.IO){
     delay(2500)
     activity!!.runOnUiThread {
         loading.visibility = View.GONE
-        panel.visibility =View.VISIBLE}
-
+       }
     isFind = true
 }
             }

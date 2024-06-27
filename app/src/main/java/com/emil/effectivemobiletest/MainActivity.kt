@@ -9,6 +9,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -47,6 +48,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var ticketsFragment:TicketsFragment
     private lateinit var  editor:SharedPreferences.Editor
 private lateinit var  sharedPreferences: SharedPreferences
+    private lateinit var  company1: TextView
+    private lateinit var  company2: TextView
+    private lateinit var  company3: TextView
+    private lateinit var price1: TextView
+    private lateinit var  price2: TextView
+    private lateinit var  price3: TextView
+    private lateinit var time1: TextView
+    private lateinit var time2: TextView
+    private lateinit var time3: TextView
+    private lateinit var checkAllTickets: Button
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +86,13 @@ private lateinit var  sharedPreferences: SharedPreferences
         val shortLl = findViewById<LinearLayout>(R.id.ll_short)
         val subscriptionsLl = findViewById<LinearLayout>(R.id.ll_subscriptions)
         val profileLl = findViewById<LinearLayout>(R.id.ll_profile)
+        company1 = findViewById(R.id.tv_c1)
+        company2 = findViewById(R.id.tv_c2)
+        company3 = findViewById(R.id.tv_c3)
+      price1 = findViewById(R.id.tv_price1)
+        price2 = findViewById(R.id.tv_price2)
+        price3 = findViewById(R.id.tv_price3)
+        checkAllTickets = findViewById(R.id.bt_check_all)
         pressed(ticketsButton,ticketsText)
         changeFragment (ticketsFragment)
 

@@ -16,4 +16,5 @@
     <color name="dialog">#242529</color>
     <color name="popular_dur">#5E5F61</color>
     <color name="button">#2D323A</color>
+    <color name="price_color">#2261BC</color>
 </resources>
