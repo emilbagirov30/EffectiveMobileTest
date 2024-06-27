@@ -186,7 +186,7 @@ backward.setOnClickListener {
 
             override fun afterTextChanged(s: Editable?) {
 lifecycleScope.launch(Dispatchers.IO){
-    delay(100)
+    delay(1000)
     activity!!.runOnUiThread {
         loading.visibility = View.GONE
        }
