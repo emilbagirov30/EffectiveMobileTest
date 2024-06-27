@@ -11,6 +11,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
@@ -19,6 +20,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
+import com.emil.network.TicketOffer
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -31,12 +33,27 @@ import java.util.Date
 import java.util.Locale
 
 class BottomSheetDialog (private var where:String) : BottomSheetDialogFragment() {
-private lateinit var whereEt:EditText
-    private lateinit var whitherEt:EditText
 
+
+
+    private lateinit var checkAllTickets: Button
+    lateinit var whereEt:EditText
+    lateinit var whitherEt:EditText
 
     companion object{
         var isFind = false
+        const val TAG = "BottomSheetDialog"
+        lateinit var  company1: TextView
+        lateinit var  company2: TextView
+        lateinit var  company3: TextView
+        lateinit var price1: TextView
+        lateinit var  price2: TextView
+        lateinit var  price3: TextView
+        lateinit var time1: TextView
+        lateinit var time2: TextView
+        lateinit var time3: TextView
+
+
     }
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -67,6 +84,16 @@ private lateinit var whereEt:EditText
         val panel = view.findViewById<HorizontalScrollView>(R.id.hsv_panel)
         val date = view.findViewById<TextView>(R.id.tv_date)
         val dayOfTheWeek = view.findViewById<TextView>(R.id.tv_day_of_week)
+        company1 =  view.findViewById(R.id.tv_c1)
+        company2 =  view.findViewById(R.id.tv_c2)
+        company3 =  view.findViewById(R.id.tv_c3)
+        price1 =  view.findViewById(R.id.tv_price1)
+        price2 =  view.findViewById(R.id.tv_price2)
+        price3 =  view.findViewById(R.id.tv_price3)
+       time1 =  view.findViewById(R.id.tv_time1)
+        time2 =  view.findViewById(R.id.tv_time2)
+        time3 =  view.findViewById(R.id.tv_time3)
+        checkAllTickets =  view.findViewById(R.id.bt_check_all)
         setFormattedDate(date, dayOfTheWeek)
 
 
@@ -126,23 +153,26 @@ backward.setOnClickListener {
                 val currentText = s.toString().trim()
 
                 if (currentText.isNotEmpty()) {
-                  revers.visibility = View.VISIBLE
-                    plane.visibility = View.GONE
-                    search.visibility = View.GONE
-                   back.visibility = View.VISIBLE
-                    tips.visibility = View.GONE
-             loading.visibility = View.VISIBLE
-                    panel.visibility =View.VISIBLE
-                    ticketsLl.visibility = View.VISIBLE
-                }else{
+
+                        revers.visibility = View.VISIBLE
+                        plane.visibility = View.GONE
+                        search.visibility = View.GONE
+                        back.visibility = View.VISIBLE
+                        tips.visibility = View.GONE
+                        loading.visibility = View.VISIBLE
+                        panel.visibility = View.VISIBLE
+                        ticketsLl.visibility = View.VISIBLE
+
+                }else {
                     revers.visibility = View.GONE
-                    plane.visibility = View.VISIBLE
-                    search.visibility = View.VISIBLE
-                    back.visibility = View.GONE
-                    tips.visibility = View.VISIBLE
-                    panel.visibility =View.GONE
-                    ticketsLl.visibility = View.GONE
-                    isFind = false
+                        plane.visibility = View.VISIBLE
+                        search.visibility = View.VISIBLE
+                        back.visibility = View.GONE
+                        tips.visibility = View.VISIBLE
+                        panel.visibility = View.GONE
+                        ticketsLl.visibility = View.GONE
+                        isFind = false
+
                 }
 
             }
@@ -225,5 +255,18 @@ lifecycleScope.launch(Dispatchers.IO){
         )
         datePickerDialog.show()
     }
+    fun updateTicketOffers(ticketOffers: List<TicketOffer>) {
+            company1.text = ticketOffers[0].title
+            price1.text = "${ticketOffers[0].price.value} ₽"
+            time1.text = ticketOffers[0].timeRange.joinToString(" ")
 
+            company2.text = ticketOffers[1].title
+            price2.text = "${ticketOffers[1].price.value} ₽"
+            time2.text = ticketOffers[1].timeRange.joinToString(" ")
+
+            company3.text = ticketOffers[2].title
+            price3.text = "${ticketOffers[2].price.value} ₽"
+            time3.text = ticketOffers[2].timeRange.joinToString(" ")
+
+    }
 }

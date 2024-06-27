@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -17,16 +18,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emil.network.NetworkModule
 import com.emil.network.ApiService
 import com.emil.network.OffersResponse
+import com.emil.ui.BottomSheetDialog
 import com.emil.ui.CapFragment
 
 import com.squareup.moshi.Moshi
 import com.emil.ui.R
 import com.emil.ui.TicketsFragment
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -48,16 +53,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var ticketsFragment:TicketsFragment
     private lateinit var  editor:SharedPreferences.Editor
 private lateinit var  sharedPreferences: SharedPreferences
-    private lateinit var  company1: TextView
-    private lateinit var  company2: TextView
-    private lateinit var  company3: TextView
-    private lateinit var price1: TextView
-    private lateinit var  price2: TextView
-    private lateinit var  price3: TextView
-    private lateinit var time1: TextView
-    private lateinit var time2: TextView
-    private lateinit var time3: TextView
-    private lateinit var checkAllTickets: Button
+   var  bsDialog: BottomSheetDialog? = null
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,21 +82,19 @@ private lateinit var  sharedPreferences: SharedPreferences
         val shortLl = findViewById<LinearLayout>(R.id.ll_short)
         val subscriptionsLl = findViewById<LinearLayout>(R.id.ll_subscriptions)
         val profileLl = findViewById<LinearLayout>(R.id.ll_profile)
-        company1 = findViewById(R.id.tv_c1)
-        company2 = findViewById(R.id.tv_c2)
-        company3 = findViewById(R.id.tv_c3)
-      price1 = findViewById(R.id.tv_price1)
-        price2 = findViewById(R.id.tv_price2)
-        price3 = findViewById(R.id.tv_price3)
-        checkAllTickets = findViewById(R.id.bt_check_all)
         pressed(ticketsButton,ticketsText)
         changeFragment (ticketsFragment)
+
+
+
 
        ticketsLl.setOnClickListener{
             pressed(ticketsButton,ticketsText)
            changeFragment (ticketsFragment)
            viewModel.loadOffers()
+           viewModel.loadTicketsOffers()
         }
+
        hotelsLl.setOnClickListener{
             pressed(hotelsButton,hotelsText)
            changeFragment (capFragment)
@@ -119,9 +113,13 @@ private lateinit var  sharedPreferences: SharedPreferences
         }
        sharedPreferences = getSharedPreferences("AppData", Context.MODE_PRIVATE)
         editor = sharedPreferences.edit()
+
         observeViewModel()
+
+
     }
 
+    @SuppressLint("ResourceType", "ClickableViewAccessibility", "SuspiciousIndentation")
     private fun observeViewModel() {
         viewModel.offersData.observe(this) { offers ->
             val fragment =
@@ -135,9 +133,29 @@ private lateinit var  sharedPreferences: SharedPreferences
                 val lastText = sharedPreferences.getString("where", "Минск").toString()
                 ticketsFragment.whereEt.setText(lastText)
 
+
+                ticketsFragment.whitherEt.setOnTouchListener { _, event ->
+                    if (event.action == MotionEvent.ACTION_UP) {
+                    bsDialog = BottomSheetDialog(ticketsFragment.whereEt.text.toString().trim())
+                        bsDialog!!.show(ticketsFragment.parentFragmentManager,  bsDialog!!.tag)
+                        viewModel.loadTicketsOffers()
+                    }
+                    false
+                }
+
             }
-        }
-    }
+                viewModel.ticketsOffersData.observe(this) { ticketOffers ->
+                   bsDialog?.updateTicketOffers(
+                        ticketOffers
+                    )
+                }
+
+
+                }
+
+            }
+
+
 
     private fun pressed (ib: View, tv:TextView){
         ticketsButton.backgroundTintList = ColorStateList.valueOf(defaultColor!!)
@@ -165,8 +183,9 @@ private lateinit var  sharedPreferences: SharedPreferences
 
     override fun onStop() {
         super.onStop()
-        val where = ticketsFragment.whereEt.text.trim().toString()
+        val where = ticketsFragment.whereEt.text?.trim().toString()
         editor.putString("where", where)
         editor.apply()
     }
+
 }

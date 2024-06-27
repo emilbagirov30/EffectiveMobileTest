@@ -38,13 +38,6 @@ class TicketsFragment : Fragment() {
         whitherEt = view.findViewById(R.id.et_whither)
 
 
-        whitherEt.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                val bottomSheetFragment = BottomSheetDialog(whereEt.text.toString().trim())
-                bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
-            }
-            false
-        }
 
 
         return view

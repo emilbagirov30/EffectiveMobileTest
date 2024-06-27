@@ -17,4 +17,5 @@
     <color name="popular_dur">#5E5F61</color>
     <color name="button">#2D323A</color>
     <color name="price_color">#2261BC</color>
+    <color name="tickets_back"> #1D1E20</color>
 </resources>
