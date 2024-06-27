@@ -4,6 +4,7 @@ import MainViewModel
 import OfferAdapter
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -121,6 +122,7 @@ private lateinit var  sharedPreferences: SharedPreferences
 
     @SuppressLint("ResourceType", "ClickableViewAccessibility", "SuspiciousIndentation")
     private fun observeViewModel() {
+        println ("Вызван")
         viewModel.offersData.observe(this) { offers ->
             val fragment =
                 supportFragmentManager.findFragmentById(R.id.fragment_container) as? TicketsFragment
@@ -132,18 +134,22 @@ private lateinit var  sharedPreferences: SharedPreferences
                 offerAdapter.submitList(offers)
                 val lastText = sharedPreferences.getString("where", "Минск").toString()
                 ticketsFragment.whereEt.setText(lastText)
+            }
 
-
-                ticketsFragment.whitherEt.setOnTouchListener { _, event ->
-                    if (event.action == MotionEvent.ACTION_UP) {
+            ticketsFragment.whitherEt.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
                     bsDialog = BottomSheetDialog(ticketsFragment.whereEt.text.toString().trim())
-                        bsDialog!!.show(ticketsFragment.parentFragmentManager,  bsDialog!!.tag)
-                        viewModel.loadTicketsOffers()
-                    }
-                    false
+                    bsDialog!!.show(ticketsFragment.parentFragmentManager, bsDialog!!.tag)
+                    viewModel.loadTicketsOffers()
+
+                }
+                false
+            }
+        }
+                bsDialog?.checkAllTickets?.setOnClickListener {
+                    switchToAllTicketsActivity()
                 }
 
-            }
                 viewModel.ticketsOffersData.observe(this) { ticketOffers ->
                    bsDialog?.updateTicketOffers(
                         ticketOffers
@@ -151,7 +157,7 @@ private lateinit var  sharedPreferences: SharedPreferences
                 }
 
 
-                }
+
 
             }
 
@@ -187,5 +193,11 @@ private lateinit var  sharedPreferences: SharedPreferences
         editor.putString("where", where)
         editor.apply()
     }
-
+    private fun switchToAllTicketsActivity() {
+        val intent = Intent(this@MainActivity, AllTicketsActivity::class.java)
+        intent.putExtra("where",bsDialog?.whereEt?.text.toString().trim())
+        intent.putExtra("whither",bsDialog?.whitherEt?.text?.toString()?.trim())
+        intent.putExtra("date",bsDialog?.date?.text)
+        startActivity(intent)
+    }
 }

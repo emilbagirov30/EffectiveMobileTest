@@ -36,7 +36,7 @@ class BottomSheetDialog (private var where:String) : BottomSheetDialogFragment()
 
 
 
-    private lateinit var checkAllTickets: Button
+    lateinit var checkAllTickets: Button
     lateinit var whereEt:EditText
     lateinit var whitherEt:EditText
     lateinit var date:TextView
@@ -143,9 +143,7 @@ backward.setOnClickListener {
         back.setOnClickListener {
             dialog!!.cancel()
         }
-        checkAllTickets.setOnClickListener {
-            switchToAllTicketsActivity()
-        }
+
 
        whitherEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -218,13 +216,7 @@ lifecycleScope.launch(Dispatchers.IO){
         val intent = Intent(activity, CapActivity::class.java)
         startActivity(intent)
     }
-    private fun switchToAllTicketsActivity() {
-        val intent = Intent(activity, AllTicketsActivity::class.java)
-        intent.putExtra("where",whereEt.text.toString().trim())
-        intent.putExtra("whither",whitherEt.text.toString().trim())
-        intent.putExtra("date",date.text)
-        startActivity(intent)
-    }
+
 
     private fun setTown (town:String){
         whitherEt.setText(town)

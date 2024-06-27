@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.emil.network.ApiService
 import com.emil.network.OffersResponse
 import com.emil.network.Offer
+import com.emil.network.Ticket
 import com.emil.network.TicketOffer
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -17,6 +18,8 @@ class MainViewModel(private val apiService: ApiService) : ViewModel() {
     val offersData: LiveData<List<Offer>> = _offersData
     private val _ticketsOffersData = MutableLiveData<List<TicketOffer>>()
     val ticketsOffersData: LiveData<List<TicketOffer>> = _ticketsOffersData
+    private val _ticketsData = MutableLiveData<List<Ticket>>()
+    val ticketsData: LiveData<List<Ticket>> = _ticketsData
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         Log.e("MainViewModel", "Coroutine error occurred: $exception")
     }
@@ -55,7 +58,21 @@ class MainViewModel(private val apiService: ApiService) : ViewModel() {
             }
         }
     }
-
+    internal fun loadTickets() {
+        CoroutineScope(Dispatchers.IO).launch(coroutineExceptionHandler) {
+            try {
+                val response = apiService.getTicketsData().await()
+                if (response.isSuccessful) {
+                    _ticketsData.postValue(response.body()?.tickets ?: emptyList())
+                    Log.d("MainViewModel", "Tickets loaded: ${response.body()?.tickets}")
+                } else {
+                    Log.e("MainViewModel", "Failed to load tickets: ${response.errorBody()}")
+                }
+            } catch (e: Exception) {
+                Log.e("MainViewModel", "Error loading tickets ", e)
+            }
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()
