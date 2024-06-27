@@ -27,8 +27,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
 
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_back" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -44,6 +52,9 @@
                             android:orientation="horizontal"
                             android:paddingVertical="8dp">
 
+
+
+
                             <ImageView
                                 android:id="@+id/iv_plane_et"
                                 android:layout_width="wrap_content"
@@ -52,18 +63,36 @@
                                 android:layout_marginRight="3dp"
                                 android:src="@drawable/ic_plane_where" />
 
-                            <EditText
-                                android:id="@+id/et_where"
-                                android:layout_width="0dp"
+                            <RelativeLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:hint="Откуда - Москва"
-                                android:textColor="@color/white"
-                                android:textColorHint="@color/text"
-                                android:background="@null"
-                                android:padding="5dp"
-                                android:textSize="16sp"
-                                android:fontFamily="@font/sfpro" />
+                              >
+
+                                <EditText
+                                    android:id="@+id/et_where"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toLeftOf="@+id/ib_reverse"
+                                    android:hint="Откуда - Москва"
+                                    android:maxLines="1"
+                                    android:textColor="@color/white"
+                                    android:textColorHint="@color/text"
+                                    android:background="@null"
+                                    android:padding="5dp"
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/sfpro" />
+
+                                <ImageButton
+                                    android:id="@+id/ib_reverse"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:visibility="gone"
+                                 android:layout_marginRight="10dp"
+                                  android:background="@drawable/ic_reverse"
+                                     />
+                            </RelativeLayout>
                         </LinearLayout>
 
                         <View
@@ -88,23 +117,304 @@
                                 android:layout_marginRight="3dp"
                                 android:src="@drawable/ic_search" />
 
-                            <EditText
-                                android:id="@+id/et_whither"
-                                android:layout_width="0dp"
+                            <RelativeLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:hint="Куда - Турция"
-                                android:textColor="@color/white"
-                                android:textColorHint="@color/text"
-                                android:background="@null"
-                                android:padding="5dp"
-                                android:textSize="16sp"
-                                android:fontFamily="@font/sfpro" />
+                                >
+
+                                <EditText
+                                    android:id="@+id/et_whither"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:maxLines="1"
+                                    android:hint="Куда - Турция"
+                                    android:textColor="@color/white"
+                                    android:textColorHint="@color/text"
+                                    android:background="@null"
+                                    android:padding="5dp"
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/sfpro" />
+
+                                <ImageButton
+                                    android:id="@+id/ib_cancel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/ic_cancel"
+                                    />
+                            </RelativeLayout>
+
                         </LinearLayout>
 
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+    <HorizontalScrollView
+        android:id="@+id/hsv_panel"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/search_back_internal">
+
+
+
+
+            <LinearLayout
+                android:id="@+id/ll_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+              android:paddingVertical="10dp"
+                android:paddingHorizontal="15dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_plus">
+
+                </ImageView>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="обратно"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/sfpro"
+                    android:textSize="14sp"
+                    android:textStyle="italic">
+
+                </TextView>
+
+
+
+            </LinearLayout>
+
+
+
+
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/search_back_internal">
+
+
+
+
+            <LinearLayout
+                android:id="@+id/ll_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="15dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="24 фев, "
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/sfpro"
+                    android:textSize="14sp"
+                    android:textStyle="italic">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/tv_day_of_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="сб"
+                    android:alpha="0.6"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/sfpro"
+                    android:textSize="14sp"
+                    android:textStyle="italic">
+
+                </TextView>
+
+
+
+            </LinearLayout>
+
+
+
+
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/search_back_internal">
+
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="15dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_passenger">
+
+                </ImageView>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="1, эконом"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/sfpro"
+                    android:textSize="14sp"
+                    android:textStyle="italic">
+
+                </TextView>
+
+
+
+            </LinearLayout>
+
+
+
+
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/search_back_internal">
+
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="15dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_filter">
+
+                </ImageView>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="фильтры"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/sfpro"
+                    android:textSize="14sp"
+                    android:textStyle="italic">
+
+                </TextView>
+
+
+
+            </LinearLayout>
+
+
+
+
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
+</HorizontalScrollView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
 
     <LinearLayout
@@ -447,6 +757,19 @@
 
 
     </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        android:layout_gravity="center">
+
+    </ProgressBar>
+
 
         </LinearLayout>
 

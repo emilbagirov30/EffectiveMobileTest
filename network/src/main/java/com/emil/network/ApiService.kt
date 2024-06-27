@@ -12,6 +12,6 @@ interface ApiService {
     @GET("path/to/tickets/endpoint")
     fun getTicketsData(): Call<TicketsResponse>
 
-    @GET("path/to/ticket_offers/endpoint")
-    fun getTicketOffersData(): Call<TicketOffersResponse>
+    @GET("v3/38b5205d-1a3d-4c2f-9d77-2f9d1ef01a4a")
+    fun getTicketOffersData(): Deferred<Response<TicketOffersResponse>>
 }

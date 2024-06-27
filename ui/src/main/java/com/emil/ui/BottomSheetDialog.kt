@@ -1,22 +1,43 @@
 package com.emil.ui
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Im
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.HorizontalScrollView
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class BottomSheetDialog (private var where:String) : BottomSheetDialogFragment() {
 private lateinit var whereEt:EditText
     private lateinit var whitherEt:EditText
+
+
+    companion object{
+        var isFind = false
+    }
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +54,33 @@ private lateinit var whereEt:EditText
         val stambul = view.findViewById<LinearLayout>(R.id.ll_stambul)
         val sochi = view.findViewById<LinearLayout>(R.id.ll_sochi)
         val phuket = view.findViewById<LinearLayout>(R.id.ll_phuket)
+        val tips= view.findViewById<LinearLayout>(R.id.ll_tips)
+        val backward= view.findViewById<LinearLayout>(R.id.ll_back)
+        val dateLl= view.findViewById<LinearLayout>(R.id.ll_date)
+        val cancel = view.findViewById<ImageButton>(R.id.ib_cancel)
+        val revers = view.findViewById<ImageButton>(R.id.ib_reverse)
+        val plane = view.findViewById<ImageView>(R.id.iv_plane_et)
+        val search = view.findViewById<ImageView>(R.id.iv_search_et)
+        val back = view.findViewById<ImageView>(R.id.iv_back)
+        val loading = view.findViewById<ProgressBar>(R.id.pb_loading)
+        val panel = view.findViewById<HorizontalScrollView>(R.id.hsv_panel)
+        val date = view.findViewById<TextView>(R.id.tv_date)
+        val dayOfTheWeek = view.findViewById<TextView>(R.id.tv_day_of_week)
+        setFormattedDate(date, dayOfTheWeek)
 
+
+backward.setOnClickListener {
+    showDatePickerDialog { date ->
+
+    }
+}
+
+       dateLl.setOnClickListener {
+           showDatePickerDialog { datePair ->
+               date.text = datePair.first
+             dayOfTheWeek.text = datePair.second
+           }
+        }
         route.setOnClickListener {
             switchToCapActivity()
         }
@@ -55,6 +102,59 @@ private lateinit var whereEt:EditText
        phuket.setOnClickListener {
             setTown("Пхукет")
         }
+
+        cancel.setOnClickListener {
+            whitherEt.setText("")
+        }
+
+        revers.setOnClickListener {
+            val where = whereEt.text.toString().trim()
+            val whither = whitherEt.text.toString().trim()
+            whereEt.setText(whither)
+            setTown(where)
+        }
+        back.setOnClickListener {
+            dialog!!.cancel()
+        }
+
+       whitherEt.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val currentText = s.toString().trim()
+
+                if (currentText.isNotEmpty()) {
+                  revers.visibility = View.VISIBLE
+                    plane.visibility = View.GONE
+                    search.visibility = View.GONE
+                   back.visibility = View.VISIBLE
+                    tips.visibility = View.GONE
+             loading.visibility = View.VISIBLE
+                }else{
+                    revers.visibility = View.GONE
+                    plane.visibility = View.VISIBLE
+                    search.visibility = View.VISIBLE
+                    back.visibility = View.GONE
+                    tips.visibility = View.VISIBLE
+                    panel.visibility =View.GONE
+                    isFind = false
+                }
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+lifecycleScope.launch(Dispatchers.IO){
+    delay(2500)
+    activity!!.runOnUiThread {
+        loading.visibility = View.GONE
+        panel.visibility =View.VISIBLE}
+
+    isFind = true
+}
+            }
+        })
+
 
         return view
     }
@@ -85,4 +185,42 @@ private lateinit var whereEt:EditText
         whitherEt.setSelection(whitherEt.text.length)
         whitherEt.requestFocus()
     }
+
+    private fun setFormattedDate(tv1: TextView, tv2: TextView) {
+        val currentDate = Date()
+
+        val dateFormat1 = SimpleDateFormat("d MMM, ", Locale.getDefault())
+        val dateFormat2 = SimpleDateFormat("E", Locale.getDefault())
+
+        val formattedDate1 = dateFormat1.format(currentDate)
+        val formattedDate2 = dateFormat2.format(currentDate)
+
+       tv1.text = "$formattedDate1"
+        tv2.text = formattedDate2
+    }
+    private fun showDatePickerDialog(onDateSelected: (Pair<String, String>) -> Unit) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            requireActivity(),
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(selectedYear, selectedMonth, selectedDay)
+
+                val dateFormat1 = SimpleDateFormat("d MMM,", Locale.getDefault())
+                val dateFormat2 = SimpleDateFormat("E", Locale.getDefault())
+
+                val formattedDate1 = dateFormat1.format(selectedDate.time)
+                val formattedDate2 = dateFormat2.format(selectedDate.time)
+
+                onDateSelected(Pair(formattedDate1, formattedDate2))
+            },
+            year, month, day
+        )
+        datePickerDialog.show()
+    }
+
 }
