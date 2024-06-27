@@ -41,7 +41,6 @@ class BottomSheetDialog (private var where:String) : BottomSheetDialogFragment()
     lateinit var whitherEt:EditText
     lateinit var date:TextView
     companion object{
-        var isFind = false
         const val TAG = "BottomSheetDialog"
         lateinit var  company1: TextView
         lateinit var  company2: TextView
@@ -156,15 +155,20 @@ backward.setOnClickListener {
                 val currentText = s.toString().trim()
 
                 if (currentText.isNotEmpty()) {
+                    loading.visibility = View.VISIBLE
+                    revers.visibility = View.VISIBLE
+                    plane.visibility = View.GONE
+                    search.visibility = View.GONE
+                    back.visibility = View.VISIBLE
+                    tips.visibility = View.GONE
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        delay(1000)
+                        activity!!.runOnUiThread {
 
-                        revers.visibility = View.VISIBLE
-                        plane.visibility = View.GONE
-                        search.visibility = View.GONE
-                        back.visibility = View.VISIBLE
-                        tips.visibility = View.GONE
-                        loading.visibility = View.VISIBLE
-                        panel.visibility = View.VISIBLE
-                        ticketsLl.visibility = View.VISIBLE
+                            panel.visibility = View.VISIBLE
+                            ticketsLl.visibility = View.VISIBLE
+                        }
+                    }
 
                 }else {
                     revers.visibility = View.GONE
@@ -174,7 +178,7 @@ backward.setOnClickListener {
                         tips.visibility = View.VISIBLE
                         panel.visibility = View.GONE
                         ticketsLl.visibility = View.GONE
-                        isFind = false
+
 
                 }
 
@@ -182,11 +186,11 @@ backward.setOnClickListener {
 
             override fun afterTextChanged(s: Editable?) {
 lifecycleScope.launch(Dispatchers.IO){
-    delay(2500)
+    delay(100)
     activity!!.runOnUiThread {
         loading.visibility = View.GONE
        }
-    isFind = true
+
 }
             }
         })
@@ -217,7 +221,7 @@ lifecycleScope.launch(Dispatchers.IO){
     private fun switchToAllTicketsActivity() {
         val intent = Intent(activity, AllTicketsActivity::class.java)
         intent.putExtra("where",whereEt.text.toString().trim())
-        intent.putExtra("whither",whereEt.text.toString().trim())
+        intent.putExtra("whither",whitherEt.text.toString().trim())
         intent.putExtra("date",date.text)
         startActivity(intent)
     }
