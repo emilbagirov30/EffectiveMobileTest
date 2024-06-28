@@ -20,6 +20,8 @@ class MainViewModel(private val apiService: ApiService) : ViewModel() {
     val ticketsOffersData: LiveData<List<TicketOffer>> = _ticketsOffersData
     private val _ticketsData = MutableLiveData<List<Ticket>>()
     val ticketsData: LiveData<List<Ticket>> = _ticketsData
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> = _errorMessage
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         Log.e("MainViewModel", "Coroutine error occurred: $exception")
     }
@@ -37,9 +39,11 @@ class MainViewModel(private val apiService: ApiService) : ViewModel() {
                     Log.d("MainViewModel", "Offers loaded : ${response.body()?.offers}")
                 } else {
                     Log.e("MainViewModel", "Failed to load offers: ${response.errorBody()}")
+                    _errorMessage.postValue("Failed to load offers: ${response.errorBody()}")
                 }
             } catch (e: Exception) {
                 Log.e("MainViewModel", "Error loading offers ", e)
+                _errorMessage.postValue("Error loading offers: ${e.message}")
             }
         }
     }

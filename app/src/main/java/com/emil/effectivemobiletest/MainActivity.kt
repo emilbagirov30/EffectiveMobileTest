@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -27,6 +28,7 @@ import com.emil.network.ApiService
 import com.emil.network.OffersResponse
 import com.emil.ui.BottomSheetDialog
 import com.emil.ui.CapFragment
+import com.emil.ui.ErrorFragment
 
 import com.squareup.moshi.Moshi
 import com.emil.ui.R
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var profileText: TextView
     private lateinit var offerAdapter:OfferAdapter
     private lateinit var ticketsFragment:TicketsFragment
+    private lateinit var errorFragment:ErrorFragment
     private lateinit var  editor:SharedPreferences.Editor
 private lateinit var  sharedPreferences: SharedPreferences
    var  bsDialog: BottomSheetDialog? = null
@@ -62,6 +65,7 @@ private lateinit var  sharedPreferences: SharedPreferences
         setContentView(R.layout.activity_main)
         val capFragment = CapFragment()
          ticketsFragment = TicketsFragment()
+        errorFragment = ErrorFragment()
         defaultColor = ContextCompat.getColor(this, R.color.text)
         buttonPressedColor = ContextCompat.getColor(this, R.color.button_pressed)
         val moshi = NetworkModule().provideMoshi()
@@ -122,7 +126,6 @@ private lateinit var  sharedPreferences: SharedPreferences
 
     @SuppressLint("ResourceType", "ClickableViewAccessibility", "SuspiciousIndentation")
     private fun observeViewModel() {
-        println ("Вызван")
         viewModel.offersData.observe(this) { offers ->
             val fragment =
                 supportFragmentManager.findFragmentById(R.id.fragment_container) as? TicketsFragment
@@ -145,6 +148,9 @@ private lateinit var  sharedPreferences: SharedPreferences
                 }
                 false
             }
+        }
+        viewModel.errorMessage.observe(this) { message ->
+            changeFragment (errorFragment)
         }
                 bsDialog?.checkAllTickets?.setOnClickListener {
                     switchToAllTicketsActivity()

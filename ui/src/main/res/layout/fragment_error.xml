@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/background_app"
+    tools:context=".ErrorFragment">
+
+ <ImageView
+     android:layout_width="100dp"
+     android:layout_height="100dp"
+     android:background="@drawable/error_icon">
+
+ </ImageView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Возникла ошибка при подключении к серверу"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/bt_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:text="Обновить"
+        android:textAllCaps="false">
+
+    </Button>
+
+</LinearLayout>
