@@ -9,10 +9,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EffectiveMobileTest">
         <activity
-            android:name=".AllTicketsActivity"
-            android:exported="false" />
-        <activity
             android:name=".CapActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
     </application>
 
