@@ -25,7 +25,12 @@ class MainViewModel(private val apiService: ApiService) : ViewModel() {
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
         Log.e("MainViewModel", "Coroutine error occurred: $exception")
     }
-
+    fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            return MainViewModel(apiService) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
     init {
         loadOffers()
     }

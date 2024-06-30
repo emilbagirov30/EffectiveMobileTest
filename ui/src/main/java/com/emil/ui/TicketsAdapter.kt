@@ -44,7 +44,7 @@ class TicketsAdapter : ListAdapter<Ticket, TicketsAdapter.ViewHolder>(TicketDiff
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(ticket: Ticket) {
-            priceTextView.text = "от ${separateRanks(ticket.price.value)} ₽"
+            priceTextView.text = "${separateRanks(ticket.price.value)} ₽"
             departureDateTextView.text = formatTime(ticket.departure.date)
             departureAirportTextView.text = ticket.departure.airport
             arrivalDateTextView.text = formatTime(ticket.arrival.date)

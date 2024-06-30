@@ -8,33 +8,23 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.emil.network.NetworkModule
 import com.emil.network.ApiService
-import com.emil.network.OffersResponse
-import com.emil.ui.BottomSheetDialog
 import com.emil.ui.CapFragment
 import com.emil.ui.ErrorFragment
 
-import com.squareup.moshi.Moshi
 import com.emil.ui.R
 import com.emil.ui.TicketsFragment
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -152,9 +142,7 @@ private lateinit var  sharedPreferences: SharedPreferences
         viewModel.errorMessage.observe(this) { message ->
             changeFragment (errorFragment)
         }
-                bsDialog?.checkAllTickets?.setOnClickListener {
-                    switchToAllTicketsActivity()
-                }
+
 
                 viewModel.ticketsOffersData.observe(this) { ticketOffers ->
                    bsDialog?.updateTicketOffers(
@@ -199,11 +187,5 @@ private lateinit var  sharedPreferences: SharedPreferences
         editor.putString("where", where)
         editor.apply()
     }
-    private fun switchToAllTicketsActivity() {
-        val intent = Intent(this@MainActivity, AllTicketsActivity::class.java)
-        intent.putExtra("where",bsDialog?.whereEt?.text.toString().trim())
-        intent.putExtra("whither",bsDialog?.whitherEt?.text?.toString()?.trim())
-        intent.putExtra("date",bsDialog?.date?.text)
-        startActivity(intent)
-    }
+
 }

@@ -13,6 +13,6 @@ class MainViewModelFactory(private val apiService: ApiService) : ViewModelProvid
             @Suppress("UNCHECKED_CAST")
             return MainViewModel(apiService) as T
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
+        throw IllegalArgumentException("Unknown ViewModel")
     }
 }

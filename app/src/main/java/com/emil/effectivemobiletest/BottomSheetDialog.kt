@@ -1,4 +1,4 @@
-package com.emil.ui
+package com.emil.effectivemobiletest
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -19,8 +19,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.lifecycleScope
 import com.emil.network.TicketOffer
+import com.emil.ui.CapActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -31,12 +33,13 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import com.emil.ui.R
 
 class BottomSheetDialog (private var where:String) : BottomSheetDialogFragment() {
 
 
 
-    lateinit var checkAllTickets: Button
+    lateinit var checkAllTickets: AppCompatButton
     lateinit var whereEt:EditText
     lateinit var whitherEt:EditText
     lateinit var date:TextView
@@ -51,6 +54,7 @@ class BottomSheetDialog (private var where:String) : BottomSheetDialogFragment()
         lateinit var time1: TextView
         lateinit var time2: TextView
         lateinit var time3: TextView
+
 
 
     }
@@ -143,7 +147,9 @@ backward.setOnClickListener {
         back.setOnClickListener {
             dialog!!.cancel()
         }
-
+          checkAllTickets.setOnClickListener {
+            switchToAllTicketsActivity()
+        }
 
        whitherEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -273,5 +279,12 @@ lifecycleScope.launch(Dispatchers.IO){
             price3.text = "${ticketOffers[2].price.value} ₽"
             time3.text = ticketOffers[2].timeRange.joinToString("   ")
 
+    }
+    private fun switchToAllTicketsActivity() {
+        val intent = Intent(activity, AllTicketsActivity::class.java)
+        intent.putExtra("where",whereEt.text.toString().trim())
+        intent.putExtra("whither",whitherEt.text?.toString()?.trim())
+        intent.putExtra("date",date.text)
+        startActivity(intent)
     }
 }

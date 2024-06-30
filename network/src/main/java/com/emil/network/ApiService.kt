@@ -6,12 +6,12 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface ApiService {
-    @GET("v3/ad9a46ba-276c-4a81-88a6-c068e51cce3a")
+    @GET("v3/4f5145bd-e5cc-4c98-ae10-28f1c0beb459")
     fun getOffersData(): Deferred<Response<OffersResponse>>
 
-    @GET("v3/c0464573-5a13-45c9-89f8-717436748b69")
+    @GET("v3/f139cc65-62af-4952-acc7-0f2dcfb74117")
     fun getTicketsData():  Deferred<Response<TicketsResponse>>
 
-    @GET("v3/38b5205d-1a3d-4c2f-9d77-2f9d1ef01a4a")
+    @GET("v3/9a59dd40-f7ae-4f09-a6ab-49dc2fe56695")
     fun getTicketOffersData(): Deferred<Response<TicketOffersResponse>>
 }

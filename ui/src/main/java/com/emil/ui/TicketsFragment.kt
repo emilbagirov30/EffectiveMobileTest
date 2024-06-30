@@ -36,10 +36,6 @@ class TicketsFragment : Fragment() {
         rvOffer = view.findViewById(R.id.rv_list_tickets)
         whereEt = view.findViewById(R.id.et_where)
         whitherEt = view.findViewById(R.id.et_whither)
-
-
-
-
         return view
     }
 
