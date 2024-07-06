@@ -54,9 +54,7 @@ class BottomSheetDialog (private var where:String) : BottomSheetDialogFragment()
         lateinit var time1: TextView
         lateinit var time2: TextView
         lateinit var time3: TextView
-
-
-
+lateinit var dateFull:String
     }
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -231,7 +229,7 @@ lifecycleScope.launch(Dispatchers.IO){
     }
 
     private fun setFormattedDate(tv1: TextView, tv2: TextView) {
-        val currentDate = Date()
+        var currentDate = Date()
 
         val dateFormat1 = SimpleDateFormat("d MMM,", Locale.getDefault())
         val dateFormat2 = SimpleDateFormat("E", Locale.getDefault())
@@ -239,9 +237,18 @@ lifecycleScope.launch(Dispatchers.IO){
         val formattedDate1 = dateFormat1.format(currentDate)
         val formattedDate2 = dateFormat2.format(currentDate)
 
+
        tv1.text = "$formattedDate1"
         tv2.text = formattedDate2
+        dateFull = getFullDate(currentDate)
     }
+
+
+    private fun getFullDate (date:Date):String {
+        val dateFormat = SimpleDateFormat("d MMMM", Locale.getDefault())
+         return dateFormat.format(date)
+    }
+
     private fun showDatePickerDialog(onDateSelected: (Pair<String, String>) -> Unit) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -261,6 +268,7 @@ lifecycleScope.launch(Dispatchers.IO){
                 val formattedDate2 = dateFormat2.format(selectedDate.time)
 
                 onDateSelected(Pair(formattedDate1, formattedDate2))
+                dateFull = getFullDate(selectedDate.time)
             },
             year, month, day
         )
@@ -284,7 +292,7 @@ lifecycleScope.launch(Dispatchers.IO){
         val intent = Intent(activity, AllTicketsActivity::class.java)
         intent.putExtra("where",whereEt.text.toString().trim())
         intent.putExtra("whither",whitherEt.text?.toString()?.trim())
-        intent.putExtra("date",date.text)
+        intent.putExtra("date", dateFull + ", 1 пассажир ")
         startActivity(intent)
     }
 }

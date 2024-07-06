@@ -24,7 +24,7 @@
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="25dp"
+    android:padding="12dp"
     android:orientation="horizontal">
 
 
